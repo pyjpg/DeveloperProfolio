@@ -1,43 +1,53 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card"
-import Image from 'next/image'
+import { Navigation, FreeMode, Thumbs } from "swiper/modules";
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/thumbs";
 
 const projects = [
   {
     category: "frontend",
     title: "project 1",
     description: "asdasdasdasdsadas",
-    stack: [{ name: "HTML 5"}, { name: "CSS"}, { name: "JavaScript"}],
+    stack: [{ name: "HTML 5" }, { name: "CSS" }, { name: "JavaScript" }],
     image: '/assets/galleryphotos/image1.jpg',
+    width: 800,
+    height: 600,
   },
   {
     category: "backend",
     title: "project 2",
     description: "asdasdasdasdsadas",
-    stack: [{ name: "Node.js"}, { name: "Express"}, { name: "MongoDB"}],
+    stack: [{ name: "Node.js" }, { name: "Express" }, { name: "MongoDB" }],
     image: '/assets/galleryphotos/image2.jpg',
     live: "",
     github: "",
+    width: 800,
+    height: 600,
   },
   {
     category: "fullstack",
     title: "project 3",
     description: "asdasdasdasdsadas",
-    stack: [{ name: "React"}, { name: "Node.js"}, { name: "MongoDB"}],
+    stack: [{ name: "React" }, { name: "Node.js" }, { name: "MongoDB" }],
     image: '/assets/galleryphotos/image3.jpg',
     live: "",
     github: "",
+    width: 800,
+    height: 600,
   }
 ];
 
 const Projects = () => {
+  const [thumbsSwiper, setThumbSwiper] = useState(null);
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -73,37 +83,61 @@ const Projects = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-          </div> 
-          <div className="p-1">               
-          {projects.map((project, index) => {
-            return (
-              <Carousel className="w-full max-w-screen-xl">
-                <CarouselContent>
-                  {Array.from({ length: 3}).map((_, index) => (
-                    <CarouselItem key={index}>
-                      <CardContent>
-                        <Card key = {index}>
-                      <CardContent>
-                      <h1>{project.title}</h1>
+          </div>
+          <motion.section className="w-full xl:w-[50%] bg-black py-12">
+            <div className="container mx-auto">
+              <Swiper
+                loop={true}
+                spaceBetween={10}
+                navigation={true}
+                thumbs={{
+                  swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null
+                }}
+                modules={[FreeMode, Navigation, Thumbs]}
+                className="h-96 w-full rounded-lg"
+              >
+                {projects.map((project, index) => (
+                  <SwiperSlide key={index}>
+                    <div className="flex h-full w-full items-center justify-center">
                       <Image
                         src={project.image}
-                        width={500}
-                        height={500}
-                        alt="Picture of the author"
+                        alt={project.alt}
+                        width={project.width}
+                        height={project.height}
+                        className="block object-cover"
                       />
-                      </CardContent>
-                    </Card>
-                    </CardContent>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                
-              </Carousel>
-              
-            )
-          })}
-       
-          </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              {/* Thumbnail */}
+              <Swiper
+                onSwiper={setThumbSwiper}
+                loop={true}
+                spaceBetween={12}
+                slidesPerView={4}
+                freeMode={true}
+                watchSlidesProgress={true}
+                modules={[FreeMode, Navigation, Thumbs]}
+                className="thumbs mt-3 h-32 w-full rounded-lg"
+              >
+                {projects.map((project, index) => (
+                  <SwiperSlide key={index}>
+                    <button className="flex h-full w-full items-center justify-center">
+                      <Image
+                        src={project.image}
+                        alt={project.alt}
+                        width={150}
+                        height={100}
+                        className="block object-cover"
+                      />
+                    </button>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          </motion.section>
         </div>
       </div>
     </motion.section>
