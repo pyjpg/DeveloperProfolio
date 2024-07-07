@@ -37,7 +37,7 @@ const experience = {
   ],
 };
 
-const Services = () => {
+const About = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -180,4 +180,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default About;
