@@ -14,6 +14,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/thumbs";
 import WorkSliderBtns from "@/components/WorkSliderBtns";
+import Card from "@/components/Card";
 
 const projects = [
   {
@@ -65,6 +66,19 @@ const Projects = () => {
       animate={{ opacity: 1, transition: { delay: 2.4, duration: 0.4, ease: 'easeIn' } }}
       className="min-h-[80vh] flex flex-col justify-center py-12 xl:px-0 bg-dark-gray text-white"
     >
+    <div className="container">
+      <section className="cards">
+        {[...Array(4)].map((_, index) => (
+          <Card
+            key={index}
+            id={`card-${index + 1}`}
+            frontSrc="/card-front.png"
+            frontAlt="Card Image"
+            backText="Your card details appear here"
+          />
+        ))}
+      </section>
+    </div>
       <div className="container mx-auto">
         <div className="flex flex-col xl:flex-row xl:gap-[30px]">
           <div className="w-full xl:w-[50%] xl:h-[460px] flex flex-col xl:justify-between order-2 xl:order-none">
